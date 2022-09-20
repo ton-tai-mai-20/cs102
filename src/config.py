@@ -6,6 +6,8 @@ from typing import List, Optional, Tuple
 
 import pygame
 
+import random
+
 from common.types import EntityType
 
 pygame.init()
@@ -75,12 +77,12 @@ class PlayerConfig:
     SPRITE_PATH: Path = ASSET_DIR / "player"
     SCALE: float = 0.16
     GRAVITY: int = 2
-    SPEED: int = 7
-    JUMP_VERTICAL_SPEED: int = 26
-    JUMP_WITH_TRAMPOLINE_SPEED: int = 40
+    SPEED: int = 14
+    JUMP_VERTICAL_SPEED: int = 30
+    JUMP_WITH_TRAMPOLINE_SPEED: int = 45
     # minimal time until switching to the next sprite in sequence
     ANIMATION_INTERVAL_MS: int = 70 * 60 // GameConfig.FPS
-    INITIAL_HP: int = 3
+    INITIAL_HP: int = 5
     INVULNERABLE_DURATION_MS: int = 1000
 
     HURT_DURATION_MS: int = 80 * 4
@@ -112,22 +114,22 @@ class PlayerInventoryConfig:
 class PlayerBulletConfig:
     SPRITE_PATH: Path = ASSET_DIR / "items" / "player_bullet.png"
     SCALE: float = 0.7
-    SPEED: int = 35
-    GRAVITY: int = 2
-    DAMAGE: int = 10
+    SPEED: int = 50
+    GRAVITY: int = 2.5
+    DAMAGE: int = random.randint(0, 500000)
 
     # initial vertical movement
     INIT_DY: int = -10
 
     # the time between creation and deletion of entities of this type
-    TTL_MS: int = 400 * 60 // GameConfig.FPS
+    TTL_MS: int = random.randint(1000, 10000)
 
 
 class ShadowConfig:
     SPRITE_PATH: Path = ASSET_DIR / "npcs" / "shadow"
     SCALE: float = 0.2
     ANIMATION_INTERVAL_MS: int = 200
-    SPEED: int = 1
+    SPEED: int = 0.1
     DAMAGE: int = 1
 
 
@@ -135,9 +137,9 @@ class ShadowBossConfig:
     SPRITE_PATH: Path = ASSET_DIR / "npcs" / "shadow"
     SCALE: float = 0.6
     ANIMATION_INTERVAL_MS: int = 200
-    SPEED: int = 1
+    SPEED: int = 0.1
     DAMAGE: int = 1
-    INITIAL_HP: int = 100
+    INITIAL_HP: int = 10000000
 
     ANGRY_INTERVAL_MS: int = 7000
     ANGRY_DURATION_MS: int = 2000
@@ -147,9 +149,9 @@ class ShadowBossConfig:
 
 class ShadowBulletConfig:
     SPRITE_PATH: Path = ASSET_DIR / "items" / "shadow_bullet.png"
-    SCALE: float = 0.05
-    SPEED: int = 5
-    GRAVITY: int = 0.3
+    SCALE: float = 0.1
+    SPEED: int = 10
+    GRAVITY: int = 10
     DAMAGE: int = 1
 
     # initial vertical movement
@@ -207,3 +209,4 @@ class WorldData:
             self.data = [
                 [EntityType(int(tile or EntityType.EMPTY.value)) for tile in row] for row in reader
             ]
+
